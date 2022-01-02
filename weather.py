@@ -48,7 +48,7 @@ def write_loop_add(out):
         if not read_csv_file_date("data.csv", day):
             weather = out['list'][i]['weather'][0]['main']
             csv_data.append([day, weather])
-    write_file_csv(csv_data)
+            write_file_csv(csv_data)
 
 
 def read_api():

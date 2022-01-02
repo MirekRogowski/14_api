@@ -14,6 +14,37 @@ dict_weather = {"Rain": "Będzie padać.",
                 "Clouds": "Nie będzie padać"
                 }
 
+def file_csv(file,attr, csv_data):
+    with open(file, attr, newline="") as f:
+            csv_writer = csv.writer(f)
+            for line in csv_data:
+                csv_writer.writerow(line)
+
+
+def write_file_csv(csv_data):
+    file_csv("data.csv", "w", csv_data) if not os.path.isfile("data.csv") else file_csv("data.csv", "a", csv_data)
+
+
+def read_json_file():
+    with open("out.json", 'r') as f:
+        out = json.load(f)
+        return out
+
+
+def write_loop(out):
+    for i in range(len(out['list'])):
+        day = str(datetime.fromtimestamp(out['list'][i]['dt']).date())
+        weather = out['list'][i]['weather'][0]['main']
+        csv_data.append([day, weather])
+    write_file_csv(csv_data)
+
+def write_loop_add(out):
+    for i in range(len(out['list'])):
+        day = str(datetime.fromtimestamp(out['list'][i]['dt']).date())
+        if read_csv_file("data.csv", day) == day:
+            weather = out['list'][i]['weather'][0]['main']
+            csv_data.append([day, weather])
+            write_file_csv(csv_data)
 
 def read_api():
     url = "https://community-open-weather-map.p.rapidapi.com/forecast/daily"

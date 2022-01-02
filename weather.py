@@ -46,6 +46,7 @@ def write_loop_add(out):
             csv_data.append([day, weather])
             write_file_csv(csv_data)
 
+
 def read_api():
     url = "https://community-open-weather-map.p.rapidapi.com/forecast/daily"
     querystring = {"q": "Konin", "lat": "35", "lon": "139", "cnt": "10", "units": "metric or imperial"}
@@ -80,3 +81,6 @@ def check_weather(date):
     weather = read_csv_file("data.csv", date)
     text = "Nie wiem."
     print(f"W dniu {date} - {dict_weather.get(weather, text)}")
+
+
+check_weather(sys.argv[2]) if len(sys.argv) == 3 else check_weather(str(datetime.now().date() + timedelta(days=1)))

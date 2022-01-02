@@ -6,6 +6,7 @@ from datetime import timedelta
 import csv
 import os
 
+
 csv_data = []
 dict_weather = {"Rain": "Będzie padać.",
                 "Snow": "Będzie padać",
@@ -13,6 +14,7 @@ dict_weather = {"Rain": "Będzie padać.",
                 "Clear": "Nie będzie padać",
                 "Clouds": "Nie będzie padać"
                 }
+
 
 def file_csv(file,attr, csv_data):
     with open(file, attr, newline="") as f:
@@ -37,6 +39,7 @@ def write_loop(out):
         weather = out['list'][i]['weather'][0]['main']
         csv_data.append([day, weather])
     write_file_csv(csv_data)
+
 
 def write_loop_add(out):
     for i in range(len(out['list'])):
@@ -83,4 +86,7 @@ def check_weather(date):
     print(f"W dniu {date} - {dict_weather.get(weather, text)}")
 
 
-check_weather(sys.argv[2]) if len(sys.argv) == 3 else check_weather(str(datetime.now().date() + timedelta(days=1)))
+if len(sys.argv) < 2:
+    print("Brak api") 
+else:
+    check_weather(sys.argv[2]) if len(sys.argv) == 3 else check_weather(str(datetime.now().date() + timedelta(days=1)))

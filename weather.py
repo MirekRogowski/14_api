@@ -59,3 +59,24 @@ def read_api():
         with open("out.json", 'w') as json_file:
              json.dump(out_url, json_file)
     write_loop(read_json_file()) if not os.path.isfile("data.csv") else write_loop_add(read_json_file())
+
+
+def read_csv_file(file, date):
+    with open(file, newline='') as f:
+        reader = csv.reader(f)
+        data = list(reader)
+        for i in data:
+            if i[0] == date:
+                return i[1]
+        return False
+
+
+def check_weather(date):
+    if not os.path.isfile("data.csv"):
+        read_api()
+    weather = read_csv_file("data.csv", date)
+    if not weather:
+        read_api()
+    weather = read_csv_file("data.csv", date)
+    text = "Nie wiem."
+    print(f"W dniu {date} - {dict_weather.get(weather, text)}")
